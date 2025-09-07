@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Lifecraft AI – Calm Space</title>
+
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Load Theme Early -->
+  <script>
+    (function(){
+      const t = localStorage.getItem('theme');
+      if(t==='dark') document.documentElement.classList.add('dark-theme');
+    })();
+  </script>
+
+  <style>
+    /* ========= THEME VARIABLES ========= */
+    :root {
+      --primary-bg:#f8fafd;
+      --card-bg:#fff;
+      --text-primary:#2c3e50;
+      --text-secondary:#7f8c8d;
+      --accent-calm:#9b59b6;
+      --accent-grad:linear-gradient(45deg,#9b59b6,#3498db);
+      --shadow-color:rgba(44,62,80,.08);
+      --border-color:#e8ecf1;
+      --header-bg:rgba(255,255,255,.85);
+    }
+    html.dark-theme {
+      --primary-bg:#0f172a;
+      --card-bg:#1e293b;
+      --text-primary:#f1f5f9;
+      --text-secondary:#94a3b8;
+      --shadow-color:rgba(0,0,0,.35);
+      --border-color:#334155;
+      --header-bg:rgba(30,41,59,.85);
+    }
+
+    /* ========= GLOBAL ========= */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body {
+      font-family:'Poppins',sans-serif;
+      background:var(--primary-bg);
+      color:var(--text-primary);
+      min-height:100vh;
+      transition:background .3s,color .3s;
+    }
+
+    /* ========= HEADER ========= */
+    .app-header {
+      background:var(--header-bg);
+      backdrop-filter:blur(12px);
+      padding:1rem 2rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 6px 20px var(--shadow-color);
+      position:sticky;top:0;z-index:20;
+      border-bottom:1px solid var(--border-color);
+    }
+    .logo {
+      font-weight:700;
+      font-size:1.6rem;
+      display:flex;align-items:center;gap:.6rem;
+      background:var(--accent-grad);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .header-right{display:flex;align-items:center;gap:1.5rem}
+    .theme-toggle-btn {
+      background:none;border:none;
+      cursor:pointer;font-size:1.4rem;
+      color:var(--text-primary);
+      transition:color .3s;
+    }
+    .theme-toggle-btn .fa-sun{display:none}
+    html.dark-theme .theme-toggle-btn .fa-sun{display:inline-block}
+    html.dark-theme .theme-toggle-btn .fa-moon{display:none}
+    .profile-icon{font-size:1.9rem;color:var(--text-primary)}
+
+    /* ========= CONTAINER & CARD ========= */
+    .container{max-width:1100px;margin:2.5rem auto;padding:0 1.25rem}
+    .card{
+      background:var(--card-bg);
+      border-radius:25px;
+      box-shadow:0 10px 30px var(--shadow-color);
+      padding:2rem;
+    }
+    .title{
+      font-size:2.3rem;
+      margin-bottom:.3rem;
+      background:var(--accent-grad);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .subtitle{color:var(--text-secondary);margin-bottom:1.5rem}
+
+    /* ========= PILL BAR ========= */
+    .pill-bar {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:1rem;
+      margin-bottom:2rem;
+    }
+    .pill-item {
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-decoration:none;
+      background:var(--card-bg);
+      border-radius:20px;
+      padding:1.2rem;
+      border:1px solid var(--border-color);
+      box-shadow:0 6px 16px var(--shadow-color);
+      transition:transform .2s,box-shadow .2s;
+    }
+    .pill-item i {font-size:1.8rem;color:var(--accent-calm);margin-bottom:.5rem}
+    .pill-item span{font-weight:600;color:var(--text-primary)}
+    .pill-item:hover {
+      transform:translateY(-4px);
+      box-shadow:0 10px 24px var(--shadow-color);
+    }
+
+    /* ========= GRID BLOCKS ========= */
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.5rem;
+    }
+    .block {
+      background:var(--card-bg);
+      border:1px solid var(--border-color);
+      border-radius:18px;
+      padding:1.2rem;
+      box-shadow:0 6px 16px var(--shadow-color);
+      transition:transform .2s;
+    }
+    .block:hover{transform:translateY(-3px)}
+    .block h3{margin-bottom:.5rem;color:var(--accent-calm)}
+
+    textarea {
+      width:100%;min-height:120px;
+      border:1px solid var(--border-color);
+      border-radius:12px;
+      background:transparent;
+      color:var(--text-primary);
+      padding:12px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    /* ========= MUSIC SECTION ========= */
+    .music-box {
+      border-radius:18px;overflow:hidden;
+      box-shadow:0 6px 20px var(--shadow-color);
+    }
+    iframe {border-radius:12px}
+
+    /* ========= BACK LINK ========= */
+    .back {
+      display:inline-flex;align-items:center;gap:.6rem;
+      margin-top:1.8rem;
+      padding:.7rem 1.3rem;
+      border-radius:12px;
+      text-decoration:none;
+      background:var(--accent-calm);
+      color:#fff;
+      font-weight:600;
+      transition:background .3s;
+    }
+    .back:hover{background:#884ea0}
+
+    /* ========= MOBILE ========= */
+    @media (max-width:768px){
+      .title{font-size:1.9rem}
+      .pill-item{padding:1rem}
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="logo"><i class="fas fa-seedling"></i> Lifecraft AI</div>
+    <div class="header-right">
+      <button id="themeToggle" class="theme-toggle-btn" title="Toggle theme">
+        <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+      </button>
+      
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+    <section class="card">
+      <h1 class="title">Calm Space</h1>
+      <p class="subtitle">Relax, reflect, and recharge with mood-based activities.</p>
+
+      <!-- Pills -->
+      <div class="pill-bar">
+        <a class="pill-item" href="#"><i class="fas fa-face-smile"></i><span>Mood Activities</span></a>
+        <a class="pill-item" href="#"><i class="fas fa-book-open"></i><span>Journal</span></a>
+        <a class="pill-item" href="#"><i class="fas fa-headphones-simple"></i><span>Mindfulness</span></a>
+      </div>
+
+      <!-- Content Blocks -->
+      <div class="grid">
+        <div class="block">
+          <h3>Today’s Focus</h3>
+          <p>✨ Try a 3-minute breathing exercise and list 3 things you’re grateful for.</p>
+        </div>
+        <div class="block">
+          <h3>Quick Journal</h3>
+          <textarea placeholder="Write your thoughts here..."></textarea>
+        </div>
+        <div class="block music-box">
+          <h3>Ambient Music</h3>
+          <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ" 
+            width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          <p>🎵 Play a calming playlist while you journal or meditate.</p>
+        </div>
+      </div>
+
+      <!-- Back -->
+      <a class="back" href="post_login.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </section>
+  </main>
+
+  <!-- THEME SCRIPT -->
+  <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark-theme");
+      localStorage.setItem("theme",
+        document.documentElement.classList.contains("dark-theme") ? "dark" : "light"
+      );
+    });
+  </script>
+</body>
+</html>

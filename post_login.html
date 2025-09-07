@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifecraft AI - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --primary-bg: #f8fafd;
+            --card-bg: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --accent-career: #3498db;
+            --accent-eco: #27ae60;
+            --accent-calm: #9b59b6;
+            --shadow-color: rgba(44, 62, 80, 0.1);
+            --border-color: #e8ecf1;
+            --header-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        /* === KEY CHANGE: Dark Theme Variables === */
+        html.dark-theme {
+            --primary-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --border-color: #334155;
+            --header-bg: rgba(30, 41, 59, 0.8);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .app-header {
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2.5rem;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.4s ease;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 1rem;
+            color: transparent;
+            background: linear-gradient(45deg, var(--accent-career), var(--accent-calm));
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            text-shadow: 2px 2px 8px rgba(44, 62, 80, 0.2);
+            transform: scale(1.05);
+        }
+        
+        /* === KEY CHANGE: Styles for Theme Toggle Button === */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            padding: 5px;
+        }
+        .theme-toggle-btn .fa-sun { display: none; }
+        .theme-toggle-btn .fa-moon { display: block; }
+
+        html.dark-theme .theme-toggle-btn .fa-sun { display: block; }
+        html.dark-theme .theme-toggle-btn .fa-moon { display: none; }
+
+
+        .user-profile {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .profile-icon {
+            font-size: 1.9rem;
+            color: var(--text-primary);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            width: 180px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-dropdown.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .profile-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .profile-dropdown a span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: transparent;
+            background: linear-gradient(45deg, var(--accent-career), var(--accent-calm));
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: text-shadow 0.3s ease;
+        }
+        
+        .profile-dropdown a:hover {
+            background-color: var(--primary-bg);
+        }
+
+        .profile-dropdown a:hover span {
+            text-shadow: 1px 1px 5px rgba(44, 62, 80, 0.15);
+        }
+
+        .profile-dropdown a i {
+            width: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-eco);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            padding: 2.5rem 3rem;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 950px;
+            width: 100%;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            animation: fadeIn 1s ease-out;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.4s ease;
+        }
+
+        .dashboard-card h1 {
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(45deg, var(--accent-career), var(--accent-calm));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-animation 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .dashboard-card p.slogan {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        
+        .main-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .main-categories a {
+            text-decoration: none;
+        }
+
+        .category-card {
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 250px;
+            background-size: cover;
+            background-position: center;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+            border-radius: 18px;
+            z-index: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+        .category-card-content h3 {
+            font-size: 1.6rem;
+            margin: 0 0 0.25rem 0;
+            font-weight: 600;
+        }
+        .category-card-content p {
+            font-size: 0.95rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .category-card.career { background-image: url('images/career.jpg'); }
+        .category-card.career h3 { color: #5dade2; }
+
+        .category-card.eco { background-image: url('images/eco.jpg'); }
+        .category-card.eco h3 { color: #58d68d; }
+        
+        .category-card.calm { background-image: url('images/calm.jpg'); }
+        .category-card.calm h3 { color: #af7ac5; }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chatbot-tooltip {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            position: relative;
+            opacity: 0;
+            animation: fadeInTooltip 0.5s 1.2s forwards;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+        }
+
+        .chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 22px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-top-color: var(--card-bg);
+        }
+
+        .chatbot-tooltip.hidden {
+            opacity: 0;
+        }
+        
+        .chatbot-fab {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .chatbot-fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 25px rgba(0, 123, 255, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInTooltip {
+            to { opacity: 1; }
+        }
+        
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .app-header, .dashboard-card {
+                padding: 1.5rem;
+            }
+            .dashboard-card h1 { font-size: 2.2rem; }
+            .header-nav { display: none; }
+        }
+    </style>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo"><i class="fas fa-seedling"></i> Lifecraft AI</div>
+            <nav class="header-nav">
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button id="theme-toggle" class="theme-toggle-btn" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+            <div class="user-profile">
+                <i class="fas fa-user-circle profile-icon"></i>
+                <div class="profile-dropdown">
+                    <a href="#"><i class="fas fa-user-alt"></i> <span>View Profile</span></a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="dashboard-card">
+            <h1 class="text-gradient">Welcome to Your Growth Hub</h1>
+            <p class="slogan">"Craft your Life, Shape your Future"</p>
+            
+            <div id="mainCategories" class="main-categories">
+                <a href="career.html">
+                    <div class="category-card career">
+                        <div class="category-card-content">
+                            <h3>Career Growth</h3>
+                            <p>Plan your next move and build skills.</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="eco.html">
+                    <div class="category-card eco">
+                        <div class="category-card-content">
+                            <h3>Eco Goals</h3>
+                            <p>Track and reduce your carbon footprint.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="calm.html">
+                    <div class="category-card calm">
+                        <div class="category-card-content">
+                            <h3>Calm Space</h3>
+                            <p>Mindfulness & meditation exercises.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <div class="chatbot-container">
+        <div class="chatbot-tooltip">Hello, how can I help you?</div>
+        <button class="chatbot-fab" title="Chat with AI">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+    <script>
+        // Chatbot tooltip script
+        const chatFab = document.querySelector('.chatbot-fab');
+        const chatTooltip = document.querySelector('.chatbot-tooltip');
+        let tooltipTimer;
+
+        setTimeout(() => {
+            chatTooltip.classList.add('hidden');
+        }, 5000 + 1200);
+
+        chatFab.addEventListener('mouseenter', () => {
+            chatTooltip.classList.remove('hidden');
+            tooltipTimer = setTimeout(() => {
+                chatTooltip.classList.add('hidden');
+            }, 5000);
+        });
+
+        chatFab.addEventListener('mouseleave', () => {
+            chatTooltip.classList.add('hidden');
+            clearTimeout(tooltipTimer);
+        });
+
+        chatFab.addEventListener('click', () => {
+            chatTooltip.classList.add('hidden');
+            clearTimeout(tooltipTimer);
+            alert('Chatbot coming soon');
+        });
+        
+        // Profile dropdown script
+        const profileIcon = document.querySelector('.user-profile');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+
+        profileIcon.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('active');
+            event.stopPropagation();
+        });
+        
+        window.addEventListener('click', () => {
+            if (profileDropdown.classList.contains('active')) {
+                profileDropdown.classList.remove('active');
+            }
+        });
+
+        // === KEY CHANGE: Script for Theme Toggle ===
+        const themeToggle = document.getElementById('theme-toggle');
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark-theme');
+            
+            // Save the user's preference in localStorage
+            if (document.documentElement.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Lifecraft AI – Eco Goals</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <script>
+    (function(){ const t=localStorage.getItem('theme'); if(t==='dark') document.documentElement.classList.add('dark-theme'); })();
+  </script>
+
+  <style>
+    :root{--primary-bg:#f8fafd;--card-bg:#fff;--text-primary:#2c3e50;--text-secondary:#7f8c8d;--accent-career:#3498db;--accent-eco:#27ae60;--accent-calm:#9b59b6;--shadow-color:rgba(44,62,80,.1);--border-color:#e8ecf1;--header-bg:rgba(255,255,255,.8)}
+    html.dark-theme{--primary-bg:#0f172a;--card-bg:#1e293b;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--shadow-color:rgba(0,0,0,.2);--border-color:#334155;--header-bg:rgba(30,41,59,.8)}
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',sans-serif;background:var(--primary-bg);color:var(--text-primary);transition:background .4s,color .4s;min-height:100vh}
+    .app-header{background:var(--header-bg);backdrop-filter:blur(10px);padding:1rem 2.5rem;box-shadow:0 4px 15px var(--shadow-color);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:10}
+    .logo{font-weight:700;font-size:1.6rem;color:var(--accent-eco);display:flex;gap:10px;align-items:center}
+    .header-right{display:flex;align-items:center;gap:1.5rem}
+    .theme-toggle-btn{background:none;border:none;cursor:pointer;font-size:1.4rem;color:var(--text-primary)}
+    .theme-toggle-btn .fa-sun{display:none} html.dark-theme .theme-toggle-btn .fa-sun{display:inline-block} html.dark-theme .theme-toggle-btn .fa-moon{display:none}
+    .profile-icon{font-size:1.9rem;color:var(--text-primary)}
+
+    .container{max-width:1100px;margin:2.5rem auto;padding:0 1.25rem}
+    .card{background:var(--card-bg);border-radius:25px;box-shadow:0 10px 40px var(--shadow-color);padding:2rem 2.25rem}
+    .title{font-size:2.2rem;margin:0 0 .35rem 0;background:linear-gradient(45deg,var(--accent-eco),var(--accent-career));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{color:var(--text-secondary);margin:0 0 1.25rem 0}
+
+    .pill-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--card-bg);border-radius:28px;box-shadow:0 16px 32px var(--shadow-color);padding:.75rem;border:1px solid var(--border-color)}
+    .pill-item{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;border-right:1px solid var(--border-color);text-decoration:none;border-radius:22px;transition:transform .2s,box-shadow .2s}
+    .pill-item:last-child{border-right:none}
+    .pill-item i{font-size:2rem;color:#58d68d;margin-bottom:.6rem}
+    .pill-item span{font-weight:700;color:var(--text-primary)}
+    .pill-item:hover{transform:translateY(-4px);box-shadow:0 10px 24px var(--shadow-color);background:linear-gradient(180deg,transparent,rgba(0,0,0,.03))}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.5rem}
+    .block{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:1.25rem}
+    .block h3{margin:.2rem 0 .5rem 0;color:var(--accent-eco)}
+    .back{margin-top:1.25rem;display:inline-flex;gap:.5rem;align-items:center;padding:.65rem 1rem;border-radius:10px;text-decoration:none;background:var(--accent-eco);color:#fff}
+
+    @media (max-width:768px){.pill-bar{grid-template-columns:1fr}.title{font-size:1.8rem}}
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo"><i class="fas fa-seedling"></i> Lifecraft AI</div>
+    <div class="header-right">
+      <button id="themeToggle" class="theme-toggle-btn" title="Toggle theme">
+        <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+      </button>
+      
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1 class="title">Eco Goals</h1>
+      <p class="subtitle">Build sustainable habits and track your positive impact.</p>
+
+      <div class="pill-bar">
+        <a class="pill-item" href="#"><i class="fas fa-leaf"></i><span>Habit Tracker</span></a>
+        <a class="pill-item" href="#"><i class="fas fa-chart-line"></i><span>Progress</span></a>
+        <a class="pill-item" href="#"><i class="fas fa-lightbulb"></i><span>Daily Tip</span></a>
+      </div>
+
+      <div class="grid">
+        <div class="block">
+          <h3>Weekly Goals</h3>
+          <p>Set targets like “no single-use plastic” or “5km public transit”.</p>
+        </div>
+        <div class="block">
+          <h3>Impact Overview</h3>
+          <p>Visualize saved CO₂, water, and energy with simple charts.</p>
+        </div>
+        <div class="block">
+          <h3>Community</h3>
+          <p>Share wins with friends and join challenges to stay motivated.</p>
+        </div>
+      </div>
+
+      <a class="back" href="post_login.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark-theme");
+      localStorage.setItem("theme",
+        document.documentElement.classList.contains("dark-theme") ? "dark" : "light"
+      );
+    });
+  </script>
+</body>
+</html>
